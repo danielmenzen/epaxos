@@ -1,3 +1,10 @@
+### This fork
+
+This fork is for EPaxos debug only. Some files will be deleted or will be totatally different from the original.
+
+All information below is from the EPaxos original repository.
+
+
 EPaxos
 ======
 
