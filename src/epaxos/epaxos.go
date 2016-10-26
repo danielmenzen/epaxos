@@ -6,6 +6,7 @@ import (
 	"encoding/binary"
 	"epaxosproto"
 	"fastrpc"
+	"fmt"
 	"genericsmr"
 	"genericsmrproto"
 	"io"
@@ -467,13 +468,15 @@ func (r *Replica) executeCommands() {
 					if inst == r.ExecedUpTo[q]+1 {
 						r.ExecedUpTo[q] = inst
 					}
+					fmt.Printf("%v\n", r.exec.executeCommand(int32(q), inst))
+					fmt.Printf("%v\n", inst)
 				}
 			}
 		}
 		if !executed {
 			time.Sleep(SLEEP_TIME_NS)
 		}
-		//log.Println(r.ExecedUpTo, " ", r.crtInstance)
+		//fmt.Println(r.ExecedUpTo, " ", r.crtInstance)
 	}
 }
 
@@ -704,8 +707,8 @@ func (r *Replica) updateConflicts(cmds []state.Command, replica int32, instance 
 				r.conflicts[replica][cmds[i].K] = instance
 			}
 		} else {
-            r.conflicts[replica][cmds[i].K] = instance
-        }
+			r.conflicts[replica][cmds[i].K] = instance
+		}
 		if s, present := r.maxSeqPerKey[cmds[i].K]; present {
 			if s < seq {
 				r.maxSeqPerKey[cmds[i].K] = seq

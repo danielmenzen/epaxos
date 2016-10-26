@@ -13,7 +13,7 @@ import (
 
 	"../message"
 
-	"github.com/golang/glog"
+	"../src/github.com/golang/glog"
 )
 
 var _ = fmt.Printf

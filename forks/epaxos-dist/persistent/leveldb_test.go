@@ -3,9 +3,8 @@ package persistent
 import (
 	"testing"
 
-	"../../epaxos"
-	"github.com/golang/leveldb/db"
-	"github.com/stretchr/testify/assert"
+	"../../epaxos-dist"
+	"../src/github.com/stretchr/testify/assert"
 )
 
 func TestNewCloseAndDrop(t *testing.T) {

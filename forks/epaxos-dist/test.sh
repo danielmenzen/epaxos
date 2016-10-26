@@ -4,6 +4,12 @@
 rm /dev/shm/demo* -fr
 rm /tmp/*test* -fr
 
+path=`pwd -P`
+
+echo $path
+
+export GOPATH=$path
+
 ROOT=$GOPATH/src/
 cd $ROOT
 
@@ -40,13 +46,13 @@ rm log*
 go build
 
 echo "Fire 3 replicas:"
-./demo -id=0 >/dev/null -v=1 -log_dir=/dev/shm -alsologtostderr 2>>log0 &
+./demo -id=0 >/dev/null -v=1 -log_dir=/tmp -alsologtostderr 2>>log0 &
 replica[0]=$!
 echo "replica[0]=${replica[0]}, logfile=log0"
-./demo -id=1 >/dev/null -v=1 -log_dir=/dev/shm -alsologtostderr 2>>log1 &
+./demo -id=1 >/dev/null -v=1 -log_dir=/tmp -alsologtostderr 2>>log1 &
 replica[1]=$!
 echo "replica[1]=${replica[1]}, logfile=log1"
-./demo -id=2 >/dev/null -v=1 -log_dir=/dev/shm -alsologtostderr 2>>log2 &
+./demo -id=2 >/dev/null -v=1 -log_dir=/tmp -alsologtostderr 2>>log2 &
 replica[2]=$!
 echo "replica[2]=${replica[2]}, logfile=log2"
 

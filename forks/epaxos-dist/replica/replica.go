@@ -20,10 +20,10 @@ import (
 	"sort"
 	"time"
 
-	"../../epaxos"
+	"../../epaxos-dist"
 	"../message"
 	"../persistent"
-	"github.com/golang/glog"
+	"../src/github.com/golang/glog"
 )
 
 // #if test

@@ -3,7 +3,7 @@ package test
 import (
 	"bytes"
 
-	"../../epaxos"
+	"../../epaxos-dist"
 	"../message"
 )
 

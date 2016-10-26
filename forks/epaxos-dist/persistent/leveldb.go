@@ -4,15 +4,15 @@ import (
 	"os"
 	"path/filepath"
 
-	"../../epaxos"
-	"github.com/golang/leveldb"
-	"github.com/golang/leveldb/db"
+	"../src/github.com/syndtr/goleveldb/leveldb/"
+	"../src/github.com/syndtr/goleveldb/leveldb/opt"
 )
 
 type LevelDB struct {
+	//*DB
 	fpath string
-	ldb   *leveldb.DB
-	wsync *db.WriteOptions
+	ldb   *leveldb
+	wsync *opt.WriteOptions
 }
 
 func NewLevelDB(path string, restore bool) (*LevelDB, error) {

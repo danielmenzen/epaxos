@@ -5,9 +5,9 @@ import (
 	"testing"
 
 	"../message"
+	"../src/github.com/stretchr/testify/assert"
 	"../test"
 	"../transporter"
-	"github.com/stretchr/testify/assert"
 )
 
 var _ = fmt.Printf

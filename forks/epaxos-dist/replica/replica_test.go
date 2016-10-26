@@ -5,11 +5,11 @@ import (
 	"testing"
 	"time"
 
-	"../../epaxos"
+	"../../epaxos-dist"
 	"../message"
+	"../src/github.com/stretchr/testify/assert"
 	"../test"
 	"../transporter"
-	"github.com/stretchr/testify/assert"
 )
 
 var _ = fmt.Printf
