@@ -1,5 +1,7 @@
 bin/
+forks/bin/
 pkg/
+forks/pkg/
 *.log
 stable-store-replica0
 stable-store-replica1
