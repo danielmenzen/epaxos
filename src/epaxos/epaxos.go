@@ -6,7 +6,6 @@ import (
 	"encoding/binary"
 	"epaxosproto"
 	"fastrpc"
-	"fmt"
 	"genericsmr"
 	"genericsmrproto"
 	"io"
@@ -468,8 +467,8 @@ func (r *Replica) executeCommands() {
 					if inst == r.ExecedUpTo[q]+1 {
 						r.ExecedUpTo[q] = inst
 					}
-					fmt.Printf("%v\n", r.exec.executeCommand(int32(q), inst))
-					fmt.Printf("%v\n", inst)
+					//fmt.Printf("%v\n", r.exec.executeCommand(int32(q), inst))
+					//fmt.Printf("%v\n", inst)
 				}
 			}
 		}
@@ -1260,6 +1259,7 @@ func (r *Replica) handleAcceptReply(areply *epaxosproto.AcceptReply) {
 ***********************************************************************/
 
 func (r *Replica) handleCommit(commit *epaxosproto.Commit) {
+	dlog.Printf("handleCommit !")
 	inst := r.InstanceSpace[commit.Replica][commit.Instance]
 
 	if commit.Seq >= r.maxSeq {
@@ -1279,6 +1279,9 @@ func (r *Replica) handleCommit(commit *epaxosproto.Commit) {
 			}
 			inst.lb = nil
 		}
+		//dlog.Printf("%v\n", commit.Seq)
+		//dlog.Printf("%v\n", commit.Deps)
+		dlog.Printf("committed ! IF1")
 		inst.Seq = commit.Seq
 		inst.Deps = commit.Deps
 		inst.Status = epaxosproto.COMMITTED
@@ -1294,7 +1297,7 @@ func (r *Replica) handleCommit(commit *epaxosproto.Commit) {
 			0,
 			nil}
 		r.updateConflicts(commit.Command, commit.Replica, commit.Instance, commit.Seq)
-
+		dlog.Printf("committed ! IF2")
 		if len(commit.Command) == 0 {
 			//checkpoint
 			//update latest checkpoint info
@@ -1309,6 +1312,8 @@ func (r *Replica) handleCommit(commit *epaxosproto.Commit) {
 
 	r.recordInstanceMetadata(r.InstanceSpace[commit.Replica][commit.Instance])
 	r.recordCommands(commit.Command)
+	dlog.Printf("committed !")
+	//dlog.Printf("%v\n", commit.Command)
 }
 
 func (r *Replica) handleCommitShort(commit *epaxosproto.CommitShort) {
@@ -1349,7 +1354,7 @@ func (r *Replica) handleCommitShort(commit *epaxosproto.CommitShort) {
 		}
 	}
 	r.updateCommitted(commit.Replica)
-
+	dlog.Printf("committed short !")
 	r.recordInstanceMetadata(r.InstanceSpace[commit.Replica][commit.Instance])
 }
 

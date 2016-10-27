@@ -2,7 +2,7 @@
 
 **This fork is for EPaxos debug only.** Some files will be deleted or will be totatally different from the original.
 
-**I'm keeping the binaries in the repo as well. Not using gitignore for now**
+**I'm keeping some binaries in the repo as well. Not using gitignore for now.**
 
 **In the forks directory, I included the https://github.com/go-distributed/epaxos for testing purposes.**
 

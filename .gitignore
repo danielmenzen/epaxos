@@ -1,1 +1,6 @@
+bin/
+pkg/
 *.log
+stable-store-replica0
+stable-store-replica1
+stable-store-replica2
