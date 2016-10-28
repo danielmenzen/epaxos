@@ -32,7 +32,7 @@ var thrifty = flag.Bool("thrifty", false, "Use only as many messages as strictly
 var exec = flag.Bool("exec", true, "Execute commands.")
 var dreply = flag.Bool("dreply", true, "Reply to client only after command has been executed.")
 var beacon = flag.Bool("beacon", false, "Send beacons to other replicas to compare their relative speeds.")
-var durable = flag.Bool("durable", false, "Log to a stable store (i.e., a file in the current dir).")
+var durable = flag.Bool("durable", true, "Log to a stable store (i.e., a file in the current dir).")
 
 func main() {
 	flag.Parse()

@@ -31,7 +31,7 @@ const BF_M_N = 32.0
 
 var bf_PT uint32
 
-const DO_CHECKPOINTING = false
+const DO_CHECKPOINTING = true
 const HT_INIT_SIZE = 200000
 const CHECKPOINT_PERIOD = 10000
 
@@ -211,7 +211,9 @@ func (r *Replica) recordCommands(cmds []state.Command) {
 	}
 	for i := 0; i < len(cmds); i++ {
 		cmds[i].Marshal(io.Writer(r.StableStore))
+		dlog.Printf("COMMAND: %d ", cmds[i])
 	}
+	dlog.Printf("COMMAND SEQUENCE\n")
 }
 
 //sync with the stable store
@@ -674,8 +676,11 @@ func (r *Replica) bcastCommit(replica int32, instance int32, cmds []state.Comman
 		}
 		if r.Thrifty && sent >= r.N/2 {
 			r.SendMsg(r.PreferredPeerOrder[q], r.commitRPC, args)
+			dlog.Println("PreferredPeerOrder: %+v", args.Deps)
 		} else {
 			r.SendMsg(r.PreferredPeerOrder[q], r.commitShortRPC, argsShort)
+			//r.SendMsg(r.PreferredPeerOrder[q], r.commitRPC, args)
+			dlog.Println("PreferredPeerOrder: %+v", argsShort.Deps)
 			sent++
 		}
 	}
@@ -1355,6 +1360,7 @@ func (r *Replica) handleCommitShort(commit *epaxosproto.CommitShort) {
 	}
 	r.updateCommitted(commit.Replica)
 	dlog.Printf("committed short !")
+	//r.recordCommands(commit.Command)
 	r.recordInstanceMetadata(r.InstanceSpace[commit.Replica][commit.Instance])
 }
 

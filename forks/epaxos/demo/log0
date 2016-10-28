@@ -1,0 +1,15 @@
+E1028 15:27:06.590725   13612 replica.go:222] replica.New: failed to make new storage:  open /home/ubuntu/epaxos-fork/epaxos/demo: is a directory
+F1028 15:27:06.593381   13612 server.go:86] open /home/ubuntu/epaxos-fork/epaxos/demo: is a directory
+goroutine 1 [running]:
+github.com/golang/glog.stacks(0x799000, 0x0, 0x0, 0x0)
+	/home/ubuntu/epaxos-fork/epaxos/src/github.com/golang/glog/glog.go:769 +0xb8
+github.com/golang/glog.(*loggingT).output(0x77ed60, 0xc800000003, 0xc82009a000, 0x7673af, 0x9, 0x56, 0x0)
+	/home/ubuntu/epaxos-fork/epaxos/src/github.com/golang/glog/glog.go:720 +0x2ce
+github.com/golang/glog.(*loggingT).printDepth(0x77ed60, 0x3, 0x1, 0xc820049ce8, 0x1, 0x1)
+	/home/ubuntu/epaxos-fork/epaxos/src/github.com/golang/glog/glog.go:646 +0x1b8
+github.com/golang/glog.(*loggingT).print(0x77ed60, 0x3, 0xc820049ce8, 0x1, 0x1)
+	/home/ubuntu/epaxos-fork/epaxos/src/github.com/golang/glog/glog.go:637 +0x50
+github.com/golang/glog.Fatal(0xc820049ce8, 0x1, 0x1)
+	/home/ubuntu/epaxos-fork/epaxos/src/github.com/golang/glog/glog.go:1128 +0x49
+main.main()
+	/home/ubuntu/epaxos-fork/epaxos/demo/server.go:86 +0x78c
