@@ -211,9 +211,9 @@ func (r *Replica) recordCommands(cmds []state.Command) {
 	}
 	for i := 0; i < len(cmds); i++ {
 		cmds[i].Marshal(io.Writer(r.StableStore))
-		dlog.Printf("COMMAND: %d ", cmds[i])
+		//dlog.Printf("COMMAND: %d ", cmds[i])
 	}
-	dlog.Printf("COMMAND SEQUENCE\n")
+	//dlog.Printf("COMMAND SEQUENCE\n")
 }
 
 //sync with the stable store
@@ -321,6 +321,7 @@ func (r *Replica) run() {
 
 		case <-fastClockChan:
 			//activate new proposals channel
+			//dlog.Printf("Proposal with fastClockChan")
 			onOffProposeChan = r.ProposeChan
 			break
 
@@ -405,6 +406,7 @@ func (r *Replica) run() {
 			break
 
 		case <-slowClockChan:
+			//dlog.Printf("Proposal with ClockChan")
 			if r.Beacon {
 				for q := int32(0); q < int32(r.N); q++ {
 					if q == r.Id {
@@ -676,11 +678,11 @@ func (r *Replica) bcastCommit(replica int32, instance int32, cmds []state.Comman
 		}
 		if r.Thrifty && sent >= r.N/2 {
 			r.SendMsg(r.PreferredPeerOrder[q], r.commitRPC, args)
-			dlog.Println("PreferredPeerOrder: %+v", args.Deps)
+			dlog.Println("Sent PreferredPeerOrder ")
 		} else {
 			r.SendMsg(r.PreferredPeerOrder[q], r.commitShortRPC, argsShort)
 			//r.SendMsg(r.PreferredPeerOrder[q], r.commitRPC, args)
-			dlog.Println("PreferredPeerOrder: %+v", argsShort.Deps)
+			dlog.Println("Sent PreferredPeerOrder Short ")
 			sent++
 		}
 	}

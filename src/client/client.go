@@ -161,6 +161,7 @@ func main() {
 			}
 			args.Command.K = state.Key(karray[i])
 			args.Command.V = state.Value(i)
+			dlog.Printf("Command: %d Key: %d Value: %d\n", id, args.Command.K, args.Command.V)
 			//args.Timestamp = time.Now().UnixNano()
 			if !*fast {
 				if *noLeader {
