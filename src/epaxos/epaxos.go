@@ -4,6 +4,7 @@ import (
 	"bloomfilter"
 	"dlog"
 	"encoding/binary"
+	//"bytes"
 	"epaxosproto"
 	"fastrpc"
 	"genericsmr"
@@ -22,7 +23,7 @@ const FALSE = uint8(0)
 const DS = 5
 const ADAPT_TIME_SEC = 10
 
-const MAX_BATCH = 1000
+const MAX_BATCH = 50
 
 const COMMIT_GRACE_PERIOD = 10 * 1e9 //10 seconds
 
@@ -198,6 +199,8 @@ func (r *Replica) recordInstanceMetadata(inst *Instance) {
 		l += 4
 	}
 	r.StableStore.Write(b[:])
+	
+	//dlog.Printf("Storage: ", b)
 }
 
 //write a sequence of commands to stable storage
