@@ -198,9 +198,9 @@ func (r *Replica) recordInstanceMetadata(inst *Instance) {
 		binary.LittleEndian.PutUint32(b[l:l+4], uint32(dep))
 		l += 4
 	}
-	r.StableStore.Write(b[:])
-	
-	//dlog.Printf("Storage: ", b)
+	//r.StableStore.Write(b[:])
+
+	//dlog.Printf("Instance Recorded!")
 }
 
 //write a sequence of commands to stable storage
@@ -212,11 +212,11 @@ func (r *Replica) recordCommands(cmds []state.Command) {
 	if cmds == nil {
 		return
 	}
+
 	for i := 0; i < len(cmds); i++ {
 		cmds[i].Marshal(io.Writer(r.StableStore))
-		//dlog.Printf("COMMAND: %d ", cmds[i])
 	}
-	//dlog.Printf("COMMAND SEQUENCE\n")
+	dlog.Printf("Commands recorded!")
 }
 
 //sync with the stable store
@@ -1365,7 +1365,7 @@ func (r *Replica) handleCommitShort(commit *epaxosproto.CommitShort) {
 	}
 	r.updateCommitted(commit.Replica)
 	dlog.Printf("committed short !")
-	//r.recordCommands(commit.Command)
+
 	r.recordInstanceMetadata(r.InstanceSpace[commit.Replica][commit.Instance])
 }
 
