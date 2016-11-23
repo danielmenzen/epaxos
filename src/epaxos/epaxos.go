@@ -4,12 +4,12 @@ import (
 	"bloomfilter"
 	"dlog"
 	"encoding/binary"
+	"io"
 	//"bytes"
 	"epaxosproto"
 	"fastrpc"
 	"genericsmr"
 	"genericsmrproto"
-	"io"
 	"log"
 	"math"
 	"state"
@@ -198,9 +198,9 @@ func (r *Replica) recordInstanceMetadata(inst *Instance) {
 		binary.LittleEndian.PutUint32(b[l:l+4], uint32(dep))
 		l += 4
 	}
-	//r.StableStore.Write(b[:])
+	r.StableStore.Write(b[:])
 
-	//dlog.Printf("Instance Recorded!")
+	dlog.Printf("Instance Recorded!")
 }
 
 //write a sequence of commands to stable storage
@@ -684,7 +684,6 @@ func (r *Replica) bcastCommit(replica int32, instance int32, cmds []state.Comman
 			dlog.Println("Sent PreferredPeerOrder ")
 		} else {
 			r.SendMsg(r.PreferredPeerOrder[q], r.commitShortRPC, argsShort)
-			//r.SendMsg(r.PreferredPeerOrder[q], r.commitRPC, args)
 			dlog.Println("Sent PreferredPeerOrder Short ")
 			sent++
 		}
@@ -1323,7 +1322,6 @@ func (r *Replica) handleCommit(commit *epaxosproto.Commit) {
 	r.recordInstanceMetadata(r.InstanceSpace[commit.Replica][commit.Instance])
 	r.recordCommands(commit.Command)
 	dlog.Printf("committed !")
-	//dlog.Printf("%v\n", commit.Command)
 }
 
 func (r *Replica) handleCommitShort(commit *epaxosproto.CommitShort) {
