@@ -4,13 +4,14 @@ import (
 	"os"
 	"path/filepath"
 
-	"github.com/boltdb/bolt"
 	"../../epaxos"
+	"../src/github.com/boltdb/bolt"
 )
 
-var BUCKET_NAME []byte = []byte{'e', 'p', 'a', 'x' , 'o', 's'}
+var BUCKET_NAME []byte = []byte{'e', 'p', 'a', 'x', 'o', 's'}
+
 type DB interface {
-	GetPath()	string
+	GetPath() string
 	Put(key string, value []byte) error
 	Get(key string) ([]byte, error)
 	Delete(key string) error
@@ -19,9 +20,10 @@ type DB interface {
 	Drop() error
 }
 type BoltDB struct {
-	db		*bolt.DB
-	fpath	string
+	db    *bolt.DB
+	fpath string
 }
+
 /*
 type LevelDB struct {
 	fpath string
@@ -39,7 +41,7 @@ func NewBoltDB(path string, restore bool) (*BoltDB, error) {
 	if !restore {
 		err = os.Remove(fpath)
 		if err != nil && os.IsExist(err) {
-				return nil, err
+			return nil, err
 		}
 	}
 
@@ -58,7 +60,7 @@ func NewBoltDB(path string, restore bool) (*BoltDB, error) {
 	}
 
 	ret := &BoltDB{
-		db:	db,
+		db:    db,
 		fpath: fpath,
 	}
 	return ret, nil
@@ -110,7 +112,6 @@ func (d *BoltDB) Drop() error {
 	}
 }
 
-
 func (d *BoltDB) BatchPut(kvs []*epaxos.KVpair) error {
 	err := d.db.Update(func(tx *bolt.Tx) error {
 		bucket := tx.Bucket(BUCKET_NAME)
@@ -125,5 +126,7 @@ func (d *BoltDB) BatchPut(kvs []*epaxos.KVpair) error {
 
 func (d *BoltDB) GetPath() string {
 
-	return d.db.Path()
+	//return d.db.Path()
+	newpath := "/tmp/teste"
+	return newpath
 }

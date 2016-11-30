@@ -3,7 +3,6 @@ package epaxos
 import (
 	"bloomfilter"
 	"dlog"
-	"encoding/binary"
 	"io"
 	//"bytes"
 	"epaxosproto"
@@ -189,17 +188,34 @@ func (r *Replica) recordInstanceMetadata(inst *Instance) {
 		return
 	}
 
-	var b [9 + DS*4]byte
-	binary.LittleEndian.PutUint32(b[0:4], uint32(inst.ballot))
-	b[4] = byte(inst.Status)
-	binary.LittleEndian.PutUint32(b[5:9], uint32(inst.Seq))
-	l := 9
-	for _, dep := range inst.Deps {
-		binary.LittleEndian.PutUint32(b[l:l+4], uint32(dep))
-		l += 4
-	}
-	r.StableStore.Write(b[:])
+	// var b [9 + DS*4]byte
+	// binary.LittleEndian.PutUint32(b[0:4], uint32(inst.ballot))
+	// b[4] = byte(inst.Status)
+	// binary.LittleEndian.PutUint32(b[5:9], uint32(inst.Seq))
+	// l := 9
+	// for _, dep := range inst.Deps {
+	// 	binary.LittleEndian.PutUint32(b[l:l+4], uint32(dep))
+	// 	l += 4
+	// }
+	// r.StableStore.Write(b[:])
 
+	dlog.Printf("Instance: %v", inst.Index)
+
+	for _, cmdsinst := range inst.Cmds {
+		dlog.Println(cmdsinst)
+	}
+
+	dlog.Printf("Ballot: %v", inst.ballot)
+
+	dlog.Printf("Seq: %v", inst.Seq)
+
+	dlog.Println("DEPS:")
+
+	for _, dep := range inst.Deps {
+		dlog.Println(dep)
+	}
+
+	//dlog.Printf("%v", b[:])
 	dlog.Printf("Instance Recorded!")
 }
 
@@ -215,8 +231,9 @@ func (r *Replica) recordCommands(cmds []state.Command) {
 
 	for i := 0; i < len(cmds); i++ {
 		cmds[i].Marshal(io.Writer(r.StableStore))
+		//dlog.Printf("%v", cmds[i])
 	}
-	dlog.Printf("Commands recorded!")
+	//dlog.Printf("Commands recorded! OP KEY VALUE")
 }
 
 //sync with the stable store

@@ -7,7 +7,7 @@ import (
 	"net"
 
 	"../message"
-	"github.com/golang/glog"
+	"../src/github.com/golang/glog"
 )
 
 const defaultUDPSize = 8192

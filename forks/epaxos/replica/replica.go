@@ -23,7 +23,7 @@ import (
 	"../../epaxos"
 	"../message"
 	"../persistent"
-	"github.com/golang/glog"
+	"../src/github.com/golang/glog"
 )
 
 // #if test
@@ -95,7 +95,7 @@ type Replica struct {
 	MessageChan     chan message.Message
 	Addrs           []string
 	Transporter     epaxos.Transporter
-*Instance
+	*Instance
 	// tarjan SCC
 	sccStack   *list.List
 	sccResults [][]*Instance
@@ -214,10 +214,11 @@ func New(param *Param) (*Replica, error) {
 
 	if param.PersistentPath == "" {
 		//panic("Persistent path not set")
-		//param.PersistentPath := "/tmp/teste"
+		//newpath := "/tmp/test"
+		//param.PersistentPath == newpath
 	}
 
-	r.store, err = persistent.NewBoltDB(param.PersistentPath, param.Restore)
+	r.store, err = persistent.NewBoltDB("/tmp/test", param.Restore)
 	if err != nil {
 		glog.Errorln("replica.New: failed to make new storage: ", err)
 		return nil, err

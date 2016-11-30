@@ -10,8 +10,8 @@ import (
 
 	"../message"
 	"../replica"
+	"../src/github.com/golang/glog"
 	"../transporter"
-	"github.com/golang/glog"
 )
 
 var _ = fmt.Printf

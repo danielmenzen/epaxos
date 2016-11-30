@@ -1,8 +1,6 @@
 package epaxos
 
-import (
-	"./message"
-)
+import "./message"
 
 type Transporter interface {
 	// non-blocking send
