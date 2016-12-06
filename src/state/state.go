@@ -2,10 +2,11 @@ package state
 
 import (
 	"sync"
-	//"fmt"
-	//"code.google.com/p/leveldb-go/leveldb"
-	//"encoding/binary"
 )
+
+//"fmt"
+//"code.google.com/p/leveldb-go/leveldb"
+//"encoding/binary"
 
 type Operation uint8
 
@@ -63,6 +64,7 @@ func ConflictBatch(batch1 []Command, batch2 []Command) bool {
 	for i := 0; i < len(batch1); i++ {
 		for j := 0; j < len(batch2); j++ {
 			if Conflict(&batch1[i], &batch2[j]) {
+				dlog.Println("Conflito entre:", &batch1[i], &batch2[j])
 				return true
 			}
 		}

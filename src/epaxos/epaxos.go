@@ -726,6 +726,11 @@ func (r *Replica) updateCommitted(replica int32) {
 }
 
 func (r *Replica) updateConflicts(cmds []state.Command, replica int32, instance int32, seq int32) {
+	for q := 0; q < r.N; q++ {
+		dlog.Println("Conflicts Map:", r.conflicts[q])
+	}
+	// fmt.Println("Conflicts Map:", r.conflicts[replica])
+	// fmt.Println("Replica:", replica)
 	for i := 0; i < len(cmds); i++ {
 		if d, present := r.conflicts[replica][cmds[i].K]; present {
 			if d < instance {
